@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
-{{ post.title_tag }} - The Blog
+{{ post.title }} - The Blog
 {% endblock %}
 {% block content %}
 
 <h1>{{ post.title }}</h1>
 
-<small>By: {{ post.author.first_name }} {{ post.author.last_name }}</small> <br>
+<small>By: {{ post.author.first_name }} {{ post.author.last_name }} <a href="{% url 'update_post' post.pk %}" class="badge bg-secondary" style="text-decoration: none;">Edit</a> &ensp; <a href="{% url 'delete_post' post.pk %}" class="badge bg-danger" style="text-decoration: none;">Delete</a></small> <br>
+<br>
+Published On - {{ post.post_date }}
 <hr>
 <p>{{ post.body }}</p>
 <br><br>
