@@ -6,7 +6,12 @@
 
 <h1>{{ post.title }}</h1>
 
-<small>By: {{ post.author.first_name }} {{ post.author.last_name }} <a href="{% url 'update_post' post.pk %}" class="badge bg-secondary" style="text-decoration: none;">Edit</a> &ensp; <a href="{% url 'delete_post' post.pk %}" class="badge bg-danger" style="text-decoration: none;">Delete</a></small> <br>
+<small>By: {{ post.author.first_name }} {{ post.author.last_name }}
+    {% if user.is_authenticated %}
+    <a href="{% url 'update_post' post.pk %}" class="badge bg-secondary" style="text-decoration: none;">Edit</a> &ensp;
+    <a href="{% url 'delete_post' post.pk %}" class="badge bg-danger" style="text-decoration: none;">Delete</a></small>
+<br>
+{% endif %}
 <br>
 Published On - {{ post.post_date }}
 <hr>
