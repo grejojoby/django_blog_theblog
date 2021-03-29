@@ -3,18 +3,31 @@
 
 
 <h1>Posts</h1>
-<ul>
-    {% for post in object_list %}
-    <li><a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a> - {{ post.author.first_name }}
+
+{% for post in object_list %}
+<div class="card mt-3 mb-3">
+    <div class="card-body">
+        <a href="{% url 'article-detail' post.pk %}"  style="text-decoration: none;">
+            <h5 class="card-title">{{ post.title }}</h5>
+        </a>
+        <h6 class="card-subtitle mb-2 text-muted">{{ post.author.first_name }}</h6>
+        <p class="card-text">{{ post.snippet }}...</p>
+
+
+        <!-- <a href="#" class="card-link">Card link</a> -->
+        <!-- <a href="#" class="card-link">Another link</a> -->
+
+    </div>
+    <div class="card-footer text-muted">
+        {{ post.post_date }} - <a href="{% url 'category' post.category|slugify %}" class="card-link" style="text-decoration: none;"> {{ post.category }}</a>
         {% if user.is_authenticated %}
             {% if user.id == post.author.id %}
-                <a href="{% url 'update_post' post.pk %}" class="badge bg-secondary" style="text-decoration: none;">Edit</a> &ensp; <a href="{% url 'delete_post' post.pk %}" class="badge bg-danger" style="text-decoration: none;">Delete</a><br>
+                <a href="{% url 'update_post' post.pk %}" class="card-link badge bg-secondary" style="text-decoration: none;">Edit</a>
+                <a href="{% url 'delete_post' post.pk %}" class="card-link badge bg-danger" style="text-decoration: none;">Delete</a>
             {% endif %}
         {% endif %}
-        <small>{{ post.post_date }}</small> - <a href="{% url 'category' post.category|slugify %}"> {{ post.category }}</a><br>
-        {{ post.body|slice:":200" }}...</li>
+    </div>
+</div>
 
-    {% endfor %}
-</ul>
-
+{% endfor %}
 {% endblock %}

@@ -17,7 +17,7 @@
 <br>
 Published On - {{ post.post_date }}
 <hr>
-<p>{{ post.body }}</p>
+<p>{{ post.body|safe }}</p>
 <br>
 <br>
 <form action="{% url 'like_post' post.pk %}" method="POST" >
