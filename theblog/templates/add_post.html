@@ -7,13 +7,22 @@ Add Post - The Blog
 {% if user.is_authenticated %}
 
 <h1>Add Post</h1>
+
 <div class="form-group">
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-secondary">Post</button>
+        <script>
+            var name = "{{ user.id }}";
+            document.getElementById('author').value = name;
+            // document.getElementById('author').innerHTML = name;
+            // document.getElementById('author').placeholder = name;
+        </script>
     <!-- </form> -->
 </div>
+
+
 {% else %}
     <h1>Access denied!</h1>
 {% endif %}
