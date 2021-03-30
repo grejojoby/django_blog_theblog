@@ -17,6 +17,9 @@
 <br>
 Published On - {{ post.post_date }}
 <hr>
+        {% if post.header_image %}
+            <img src="{{ post.header_image.url }}" class="img-fluid" alt="">
+        {% endif %}
 <p>{{ post.body|safe }}</p>
 <br>
 <br>

@@ -8,7 +8,7 @@ print(choices)
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'author', 'body','snippet', 'category')
+        fields = ('title', 'author', 'body','snippet', 'category', 'header_image')
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -17,18 +17,20 @@ class PostForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control'}),
             'snippet': forms.Textarea(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=choices,attrs={'class': 'form-control'}),
+            'header_image': forms.FileInput(attrs={'class': 'form-control'})
 
         }
 
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'body', 'snippet', 'category')
+        fields = ('title', 'body', 'snippet', 'category', 'header_image')
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
             'snippet': forms.Textarea(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
+            'header_image': forms.FileInput(attrs={'class': 'form-control'}),
 
         }
