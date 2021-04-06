@@ -26,7 +26,7 @@ SECRET_KEY = 'u)sefoe!p25hbb_fa%s*sxmuyx_wo#^3p5-u)nv7n6!6(e2xfd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['thawing-anchorage-65552.herokuapp.com','localhost','*']
+ALLOWED_HOSTS = ['thawing-anchorage-65552.herokuapp.com','localhost','*', 'grejo.live' , '65.1.133.21']
 
 
 # Application definition
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'theblog',
     'members',
     'ckeditor',
+    'ubuntu_deployer',
+    
 ]
 
 MIDDLEWARE = [
@@ -122,13 +124,58 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+DJANGO_UBUNTU_DEPLOYER = {
+    # gunicorn config
+    # required in gunicorn config {user}, {path}, {gunicorn}, {sock}, {name}
+    'GUNICORN_CONFIG': """
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User={user}
+Group=www-data
+WorkingDirectory={path}
+ExecStart={gunicorn} --access-logfile - --workers 3 --bind unix:{sock} {name}.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+    """,
+
+    # nginx config
+    # required in nginx config {domains}, {static}, {media}, {path}, {sock}, {extras}
+    'NGINX_CONFIG': """
+server {{
+    listen 80;
+    server_name {domains};
+
+    location = /favicon.ico {{ access_log off; log_not_found off; }}
+
+    location {static} {{
+        root {path};
+    }}
+
+    location {media} {{
+        root {path};
+    }}
+
+    location / {{
+        include proxy_params;
+        proxy_pass http://unix:{sock};
+    }}
+
+    {extras}
+}}
+    """,
+
+    # nginx_config extras
+    'NGINX_EXTRAS': '',
+}
