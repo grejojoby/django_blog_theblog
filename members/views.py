@@ -18,6 +18,10 @@ class ShowProfilePageView(DetailView):
         context["page_user"] = page_user
         return context
 
+class EditProfilePageView(generic.UpdateView):
+    model = Profile
+    template_name = 'registration/edit_profile_page.html'
+
 class UserRegistrationView(generic.CreateView):
     form_class = SignUpForm
     template_name = 'registration/register.html'
