@@ -38,6 +38,7 @@ Published On - {{ post.post_date }}
     - {{ total_likes }} Likes
 
 </form>
+
 <hr>
 <div class="card mb-3">
     <div class="row g-0">
@@ -73,7 +74,23 @@ Published On - {{ post.post_date }}
     </div>
 </div>
 <hr>
+<br>
+<h2 style="margin-bottom: 30px;">Comments</h2>
+{% if not post.comments.all %}
+    <h5>No Comments Yet...</h5>
+    <a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+
+{% else %}
+    <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br>
+    {% for comment in post.comments.all %}
+        <strong>{{ comment.name }} - {{ comment.date_added }}</strong> <br> {{ comment.body }}
+        <br><br>
+    {% endfor %}
+{% endif %}
+<br><br>
+<!-- <a href="{% url 'add_comment' post.pk %}">Add Comment</a><br><br> -->
+<br>
 <a href="{% url 'home' %}" class="btn btn-primary btn-block">Back</a>
 
-
+<br><br style="margin-bottom: 5%;">
 {% endblock %}

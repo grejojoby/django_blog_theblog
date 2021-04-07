@@ -31,7 +31,7 @@ class CreateProfilePageView(generic.CreateView):
 
     # fields = '__all__'
     def form_valid(self, form):
-        form.instace.user = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
     success_url = reverse_lazy('home')
 

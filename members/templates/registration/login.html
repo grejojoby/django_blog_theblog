@@ -5,12 +5,44 @@ Login
 {% block content %}
 
 
-<h1>Login</h1>
+<!-- <h1>Login</h1> -->
 <div class="form-group">
-    <form method="POST">
+    <form method="POST" class="form-login">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-secondary">Login</button>
+        
+        <div class="global-container">
+            <div class="card login-form">
+            <div class="card-body">
+                <h3 class="card-title text-center">Log in to The Blog</h3>
+                <br>    
+                <div class="card-text">
+                    <!--
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
+                    <!-- <form> -->
+                        <!-- to error: add class "has-danger" -->
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <!-- <a href="#" style="float:right;font-size:12px;">Forgot password?</a> -->
+                            <input type="password" class="form-control" name="password">
+                        </div><br>
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                        
+                        <div class="sign-up">
+                            Don't have an account? <a href="{% url 'register' %}">Create One</a>
+                        </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+        </div>
+        
+
+        <!-- <button class="btn btn-secondary">Login</button> -->
     <!-- </form> -->
 </div>
 {% endblock %}
