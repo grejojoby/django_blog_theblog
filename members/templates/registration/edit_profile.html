@@ -1,18 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}
-Edit Profile
+    Edit Settings
 {% endblock %}
 {% block content %}
 
+    {% if user.is_authenticated %}
+        {% if user.id == profile.user.id %}
+            <h1>Edit Settings</h1>
 
-<h1>Edit Profile</h1>
-
-<p><strong>Bio :</strong>  {{ user.profile.bio }}</p>
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-secondary">Update Profile</button>
-    <!-- </form> -->
-</div>
+            <p><strong>Bio :</strong> {{ user.profile.bio }}</p>
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Update Profile</button>
+                    <!-- </form> -->
+            </div>
+        {% else %}
+            <h1>Access denied! User not Profile User</h1>
+            User ID - {{ user.id }} <br> Profile - {{ profile.user.id }}
+        {% endif %}
+    {% else %}
+        <h3>Access Denied!</h3>
+    {% endif %}
 {% endblock %}

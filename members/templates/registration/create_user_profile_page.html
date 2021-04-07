@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+Create User Profile - The Blog
+{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<h1>Create Profile</h1>
+
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Create Profile</button>
+</div>
+
+
+{% else %}
+    <h1>Access denied!</h1>
+{% endif %}
+
+{% endblock %}
